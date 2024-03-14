@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f4f4;
+        margin:0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: url(../static/images/pexels-claudia-schmalz-20065048.jpg);
+        background-size:cover;
+       
+    }
+    .container{
+        background-color: aliceblue;
+        height:400px;
+        width:600px;
+        border:1px solid black;
+        border-radius:8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding:20px;
+        text-align: center;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        text-align: left;
+    }
+    button{
+        background-color: #007BFF;
+        color:#fff;
+        padding: 8px;
+        border:none;
+        border-radius: 4px;
+        width:120px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+    input,select,textarea{
+        width:100%;
+        padding: 6px;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <div class="row">
+            <div class="col">
+               <img src="{%static 'images/login.jpg'%}" alt="" width="100%" height="300px;">
+            </div>
+            <div class="col">
+                <form action="" method="post">
+                    {%csrf_token%}
+                    {{form}}
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            
+        </div>
+        
+       
+    </div>
+    
+</body>
+</html>

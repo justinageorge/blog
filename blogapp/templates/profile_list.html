@@ -1,0 +1,28 @@
+
+{%extends 'base.html'%}
+{%block body_block%}
+{%load static%}
+<div class="container">
+    <div class="row mt-5 ">
+        {% for profile in data %}
+            <div class="col-md-4 mt-3">
+                <div class="card" style="width: 100%;" >
+                    {% if profile.profile_pic %}
+                        <img src="{{ profile.profile_pic.url }}" class="card-img-top" alt="..." height="300px" width="200px">
+                    {% else %}
+                        <img src="{% static 'images/th.jpeg' %}" class="card-img-top" alt="..." height="300px" width="200px">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'update' profile.id %}">{{ profile.user.username }}</a>
+                        </h5>
+                        <p class="card-text">Bio: {{ profile.bio }}</p>
+                        <p class="card-text">Email: {{ profile.user.email }}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{%endblock%}

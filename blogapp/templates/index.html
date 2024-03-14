@@ -1,0 +1,146 @@
+
+
+
+{%extends 'base.html'%}
+{%block body_block%}
+{%load static%}
+<style>
+    .text-center{
+        text-align: center;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        background-color:  #f0f0f0; ;
+    }
+    .text-center p{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        color:#333;
+        padding:20px;
+        
+        border-radius: 10px; 
+        /* background-color: #fff;  */
+    }
+    .container{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height:60vh;
+    }
+    .row{
+        display:flex;
+        justify-content: space-around;
+        width:70%;
+        background-color: #f0f0f0; 
+        padding:20px;
+        margin-bottom: 20px;
+    }
+    .column{
+        flex:1;
+        background-color: #ccc;
+        padding: 10px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .col img{
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .post-container{
+      max-width: 90%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .post{
+      border:1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+</style>
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{%static './images/1.jpg'%}" class="d-block w-100" alt="..." style="height:500px;">
+      </div>
+      <div class="carousel-item">
+        <img src="{%static './images/2.jpg'%}" class="d-block w-100" alt="..." style="height:500px;">
+      </div>
+      <div class="carousel-item">
+        <img src="{%static './images/3.jpg'%}" class="d-block w-100" alt="..." style="height:500px;">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="text-center lead">
+    <p >Lorem ipsum dolor sit amet consectetur adipisicing elit.<br> Optio nemo sit nulla, assumenda culpa impedit deserunt ut nam repudiandae, sequi accusantium sunt provident, distinctio mollitia ipsam beatae pariatur ab iure!</p>
+    </p>
+  </div>
+  <div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="{% static 'images/TRAVEL.png' %}" alt="" style="height: 200px;">
+        </div>
+        <div class="col">
+            <img src="{% static 'images/eat.png' %}" alt="" style="height: 200px;">
+
+        </div>
+        <div class="col">
+            <img src="{% static 'images/movies.png' %}" alt="" style="height: 200px;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img src="{% static 'images/EDUCATION.png' %}" alt="" style="height: 200px;">
+        </div>
+        <div class="col">
+            <img src="{% static 'images/TECH.png' %}" alt="" style="height: 200px;">
+
+        </div>
+        <div class="col">
+            <img src="{% static 'images/others.png' %}" alt="" style="height: 200px;">
+
+        </div>
+    </div>
+</div>
+<div class="post-container">
+  <div class="post">
+    {%for data in data%}
+     <h4>{{data.title}}</h4>
+     <div>
+      <img src="{{data.image.url}}" alt="" width="80%" height="200px">
+     </div>
+     <p class="lead">{{data.content}}</p>
+     <div class="back">
+      <form  action="{%url 'comments' %}" method="post" >
+        {%csrf_token%}
+        <div class="ms-5 comment  form-control rounded-end-0 border-0">
+          <input type="text" name="text" id="" placeholder="message..." class="border-0 w-100">
+        </div>
+       <div>
+        <button type="submit" class="btn btn-success mb-4">Add</button>
+       </div>
+        
+      </form>
+     </div>
+     <i class="fa-solid fa-trash mb-3 mt-3"><a href="{%url 'delete' data.post_id%}"></a></i>
+    
+     {%endfor%}
+     
+  </div>
+</div>
+
+{%endblock%}

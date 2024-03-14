@@ -1,0 +1,56 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<style>
+    body{
+        font-family:Arial, Helvetica, sans-serif;
+        margin:0;
+        
+    }
+    .container{
+        background-color: aliceblue;
+        min-height:400px;
+        width:600px;
+        border:1px solid black;
+        border-radius: 8px;
+        box-shadow:0 0 10px;
+        padding:20px;
+        text-align: center;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        margin-top: 60px;
+        text-align: left;
+    }
+    label{
+        display: block;
+       
+    }
+    input,select,textarea{
+        width:100%;
+        padding: 6px;
+        margin-bottom: 6px;
+        box-sizing: border-box;
+    }
+    button{
+        background-color: #4CAF50;
+        color:white;
+        padding:10px 15px;
+        border:none;
+        border-radius: 5px;
+        cursor:pointer;
+        margin-top: 15px;    
+    }
+    </style>
+<div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form}}
+        <button type="submit">Add</button>
+    </form>
+</div>
+{%endblock%}
