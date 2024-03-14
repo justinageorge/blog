@@ -64,6 +64,7 @@
     }
     
 </style>
+
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -92,7 +93,7 @@
   <div class="container">
     <div class="row">
         <div class="col">
-            <img src="{% static 'images/TRAVEL.png' %}" alt="" style="height: 200px;">
+            <img src="{% static 'images/fa.png' %}" alt="" style="height: 200px;">
         </div>
         <div class="col">
             <img src="{% static 'images/eat.png' %}" alt="" style="height: 200px;">
@@ -118,14 +119,16 @@
 </div>
 <div class="post-container">
   <div class="post">
-    {%for data in data%}
-     <h4>{{data.title}}</h4>
+    
+    {% for post, comments in post_comments.items %}
+     <h4>{{post.title}}</h4>
      <div>
-      <img src="{{data.image.url}}" alt="" width="80%" height="200px">
+      <img src="{{post.image.url}}" alt="" width="80%" height="200px">
      </div>
-     <p class="lead">{{data.content}}</p>
+     <p class="lead">{{post.content}}</p>
+     
      <div class="back">
-      <form  action="{%url 'comments' %}" method="post" >
+      <form  action="{%url 'comments' pk=post.post_id %}" method="post" >
         {%csrf_token%}
         <div class="ms-5 comment  form-control rounded-end-0 border-0">
           <input type="text" name="text" id="" placeholder="message..." class="border-0 w-100">
@@ -133,14 +136,27 @@
        <div>
         <button type="submit" class="btn btn-success mb-4">Add</button>
        </div>
-        
+        <ul>
+          {% for comment in comments %}
+          <oL>{{comment.user}} {{comment.text}}</oL>
+          {%endfor%}
+        </ul>
       </form>
      </div>
-     <i class="fa-solid fa-trash mb-3 mt-3"><a href="{%url 'delete' data.post_id%}"></a></i>
+     <div>
+      
+     </div>
+     <i class="fa-solid fa-trash mb-3 mt-3"><a href="{%url 'delete' post.post_id%}"></a></i>
     
      {%endfor%}
-     
+    
+    
   </div>
 </div>
+<ul>
+ 
+  
+</ul>
+
 
 {%endblock%}

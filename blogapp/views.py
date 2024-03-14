@@ -32,10 +32,26 @@ class postCreateView(View):
         
 
 class HomeView(View):
-    def get(self,request,*args,**kwargs):
+    
+        def get(self,request,*args,**kwargs):
+            posts=Post.objects.all()
         
-        qs=Post.objects.all()
-        return render(request,"index.html",{"data":qs})
+            post_comments={}       
+            for post in posts:
+            
+                post_comments[post]=Comments.objects.filter(post=post)
+                all_comments = []
+
+# Iterate over the values of the dictionary
+                for comments_queryset in post_comments.values():
+    # Iterate over each comment queryset
+                    for comment in comments_queryset:
+                        all_comments.append(comment)
+        
+            return render(request,"index.html",{"post_comments":post_comments})
+        
+        # qs=Post.objects.all()
+        # return render(request,"index.html",{"data":qs})
         
 
 class profileUpdateView(UpdateView):
@@ -97,3 +113,20 @@ class CommentView(CreateView):
         form.instance.user=self.request.user#passing instance and user in then form
         form.instance.post=post_object
         return super().form_valid(form)
+    
+
+class CommentView(CreateView) :
+    template_name="index.html"   
+    form_class=commentForm
+
+    def get_success_url(self):
+        return reverse("home")
+    
+
+    def form_valid(self,form):
+        post_id=self.kwargs.get("pk")
+        post_object=Post.objects.get(post_id=post_id)
+        form.instance.user=self.request.user
+        form.instance.post=post_object
+        return super().form_valid(form)
+    

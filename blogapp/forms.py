@@ -1,10 +1,12 @@
 from django import forms
-from blogapp.models import Post,UserProfile,Comments
+from blogapp.models import Post,UserProfile,Comments,Category
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
 class PostForm(forms.ModelForm):
+
+    
     class Meta:
         model=Post
         fields=['title', 'content', 'url', 'cat', 'image']

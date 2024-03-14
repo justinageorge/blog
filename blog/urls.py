@@ -29,5 +29,5 @@ urlpatterns = [
     path("profiles/<int:pk>/",views.profileDetailView.as_view(),name="update"),
     path("profiles/all",views.profilelistView.as_view(),name="profilelist"),
     path("postdelete/<int:pk>/",views.postdeleteView.as_view(),name="delete"),
-    path("postcomments/",views.CommentView.as_view(),name="comments")
+    path("postcomments/<int:pk>",views.CommentView.as_view(),name="comments"),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

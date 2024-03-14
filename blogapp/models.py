@@ -23,15 +23,25 @@ class Category(models.Model):
     image=models.ImageField(upload_to='category/')
     add_date=models.DateTimeField(auto_now_add=True,null=True)
 
+ 
+
+CATEGORIES = (
+    ('technology', 'Technology'),
+    ('science', 'Science'),
+    ('education', 'Education'),
+    ('art', 'Art'),
+    ('food', 'Food'),
+    ('fashion', 'Fashion'),
+    ('others', 'Others'),
+)
 
 class Post(models.Model):
-    post_id=models.AutoField(primary_key=True)
-    title=models.CharField(max_length=200)
-    content=models.TextField()
-    url=models.CharField(max_length=100)
-    cat=models.ForeignKey(Category,on_delete=models.CASCADE)
-    image=models.ImageField(upload_to='posts/')
-    
+    post_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    url = models.CharField(max_length=100)
+    cat = models.CharField(max_length=100, choices=CATEGORIES)
+    image = models.ImageField(upload_to='posts/')
 class Comments(models.Model):
     post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name="postcomment")    
     user=models.ForeignKey(User,related_name="comments",on_delete=models.CASCADE)
