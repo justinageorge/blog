@@ -4,7 +4,7 @@ from django.views.generic import View,UpdateView,CreateView,FormView,DetailView
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.urls import reverse
-from blogapp.models import UserProfile,Post,Comments
+from blogapp.models import UserProfile,Post,Comments,Category
 
 class signUpView(CreateView):
     template_name="register.html"
@@ -40,6 +40,7 @@ class HomeView(View):
             for post in posts:
             
                 post_comments[post]=Comments.objects.filter(post=post)
+                
                 all_comments = []
 
 # Iterate over the values of the dictionary
@@ -130,3 +131,15 @@ class CommentView(CreateView) :
         form.instance.post=post_object
         return super().form_valid(form)
     
+
+class categorylistView(View):
+    def get(self,request,*args,**kwargs):
+        category=Category.objects.all()
+        
+        return render(request,"index.html",{"cat":category})    
+
+class categoryPostView(View):
+    def get(self,request,category_title,*args,**kwargs):
+        category=Category.objects.get(title=category_title)
+        posts=Post.objects.filter(cat=category_title)
+        return render(request,"category_post.html",{"category":category,"posts":posts})

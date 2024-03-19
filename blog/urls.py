@@ -30,4 +30,6 @@ urlpatterns = [
     path("profiles/all",views.profilelistView.as_view(),name="profilelist"),
     path("postdelete/<int:pk>/",views.postdeleteView.as_view(),name="delete"),
     path("postcomments/<int:pk>",views.CommentView.as_view(),name="comments"),
+    path("category",views.categorylistView.as_view(),name="category"),
+    path("categorypost/<str:category_title>/",views.categoryPostView.as_view(),name="post_category")
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

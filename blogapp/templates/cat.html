@@ -1,0 +1,19 @@
+
+<body>
+    <div class="container">
+        <h1>{{ category_title }} Posts</h1>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <h2>{{ post.title }}</h2>
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    <p>{{ post.content }}</p>
+                    <!-- Display other details of the post as needed -->
+                </li>
+            {% empty %}
+                <li>No posts found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+

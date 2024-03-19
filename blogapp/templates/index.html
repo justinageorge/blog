@@ -28,7 +28,7 @@
         align-items: center;
         height:60vh;
     }
-    .row{
+    .row1{
         display:flex;
         justify-content: space-around;
         width:70%;
@@ -62,7 +62,40 @@
       padding: 20px;
       margin-bottom: 20px;
     }
+    .comment-container{
+      margin-bottom: 20px;
+      
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      
+    }
     
+    .comment-container img{
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .comment-container h6 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.comments-list{
+  list-style: none;
+}
+.comment-container ol{
+  margin-top: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.comment-container span.created-date {
+  font-size: 12px;
+  color: #999;
+}
+
+
+
 </style>
 
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -86,35 +119,53 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+ 
   <div class="text-center lead">
     <p >Lorem ipsum dolor sit amet consectetur adipisicing elit.<br> Optio nemo sit nulla, assumenda culpa impedit deserunt ut nam repudiandae, sequi accusantium sunt provident, distinctio mollitia ipsam beatae pariatur ab iure!</p>
     </p>
   </div>
+ 
   <div class="container">
-    <div class="row">
+    <div class="row1">
+     
         <div class="col">
+          <a href="{% url 'post_category' 'fashion' %}">
             <img src="{% static 'images/fa.png' %}" alt="" style="height: 200px;">
-        </div>
+        </a>
+         
+          </div>
+          
+        
         <div class="col">
+          <a href="{% url 'post_category' 'food' %}">
             <img src="{% static 'images/eat.png' %}" alt="" style="height: 200px;">
-
+          </a>
         </div>
         <div class="col">
+          <a href="{% url 'post_category' 'art' %}">
             <img src="{% static 'images/movies.png' %}" alt="" style="height: 200px;">
-        </div>
+          </a>
+          </div>
     </div>
-    <div class="row">
+    <div class="row1">
         <div class="col">
+          <a href="{% url 'post_category' 'education'  %}">
             <img src="{% static 'images/EDUCATION.png' %}" alt="" style="height: 200px;">
-        </div>
+        </a>
+          </div>
         <div class="col">
+          <a href="{% url 'post_category' 'technology'  %}">
+
             <img src="{% static 'images/TECH.png' %}" alt="" style="height: 200px;">
-
+          </a>
         </div>
         <div class="col">
-            <img src="{% static 'images/others.png' %}" alt="" style="height: 200px;">
+          <a href="{% url 'post_category' 'others'  %}">
 
+            <img src="{% static 'images/others.png' %}" alt="" style="height: 200px;">
+         </a>
         </div>
+       
     </div>
 </div>
 <div class="post-container">
@@ -123,7 +174,7 @@
     {% for post, comments in post_comments.items %}
      <h4>{{post.title}}</h4>
      <div>
-      <img src="{{post.image.url}}" alt="" width="80%" height="200px">
+      <img src="{{post.image.url}}" alt="" width="80%" height="400px">
      </div>
      <p class="lead">{{post.content}}</p>
      
@@ -136,11 +187,20 @@
        <div>
         <button type="submit" class="btn btn-success mb-4">Add</button>
        </div>
-        <ul>
-          {% for comment in comments %}
-          <oL>{{comment.user}} {{comment.text}}</oL>
-          {%endfor%}
+        <ul class="comments-list">
+          {%for comment in comments%}
+          <li class="comment-container">
+            {%if comment.user.profile.profile_pic%}
+            <img src="{{ comment.user.profile.profile_pic.url }}" alt="">
+           {%else%}
+           <img src="{% static 'images/th.jpeg' %}" alt="" height="40px" width="40px">
+          {%endif%}
+          <h6>{{comment.user}}</h6>
+          <span class="created-date">{{ comment.created_date }}</span>
+          <oL>{{ comment.text }}</oL>
+          </li>
         </ul>
+        {%endfor%}
       </form>
      </div>
      <div>
@@ -157,6 +217,8 @@
  
   
 </ul>
-
-
 {%endblock%}
+
+
+
+
