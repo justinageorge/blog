@@ -191,7 +191,7 @@
           {%for comment in comments%}
           <li class="comment-container">
             {%if comment.user.profile.profile_pic%}
-            <img src="{{ comment.user.profile.profile_pic.url }}" alt="">
+            <img src="{{ comment.user.profile.profile_pic.url }}" alt="" height="40px" width="40px">
            {%else%}
            <img src="{% static 'images/th.jpeg' %}" alt="" height="40px" width="40px">
           {%endif%}

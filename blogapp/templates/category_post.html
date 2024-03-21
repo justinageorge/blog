@@ -19,11 +19,11 @@
         text-align: center;
         color:#333;
     }
-    ul{
+    .y{
         list-style-type: none;
         padding:0;
     }
-    li {
+.x {
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 4px;
@@ -40,9 +40,9 @@
 <body>
     <div class="container">
         <h1>{{ category.title }} Posts</h1>
-        <ul>
+        <ul class="y">
             {% for post in posts %}
-                <li>
+                <li class="x">
                     <h2>{{ post.title }}</h2>
                     <img src="{{ post.image.url }}" alt="{{ post.title }}" height="200px" width="300px">
                     <p>{{ post.content }}</p>

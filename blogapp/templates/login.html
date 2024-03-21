@@ -64,6 +64,10 @@
                     {%csrf_token%}
                     {{form}}
                     <button type="submit">Login</button>
+                    <hr>
+                    <div class="hi">
+                      <a href="{%url 'signin'%}" class="text-decoration-none">New User? click to register</a>
+                    </div>
                 </form>
             </div>
             

@@ -2,15 +2,15 @@
 {%extends 'base.html'%}
 {%block body_block%}
 {%load static%}
-<div class="container">
+<div class="container mb-5">
     <div class="row mt-5 ">
         {% for profile in data %}
             <div class="col-md-4 mt-3">
                 <div class="card" style="width: 100%;" >
                     {% if profile.profile_pic %}
-                        <img src="{{ profile.profile_pic.url }}" class="card-img-top" alt="..." height="300px" width="200px">
+                        <img src="{{ profile.profile_pic.url }}" class="card-img-top" alt="..." height="300px" width="100%">
                     {% else %}
-                        <img src="{% static 'images/th.jpeg' %}" class="card-img-top" alt="..." height="300px" width="200px">
+                        <img src="{% static 'images/t.jpeg' %}" class="card-img-top" alt="..." height="300px" width="100%">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">
@@ -18,7 +18,7 @@
                         </h5>
                         <p class="card-text">Bio: {{ profile.bio }}</p>
                         <p class="card-text">Email: {{ profile.user.email }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="{%url 'pupdate' profile.id %}" class="btn btn-primary">Edit profile</a>
                     </div>
                 </div>
             </div>

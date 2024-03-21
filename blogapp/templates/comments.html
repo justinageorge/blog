@@ -1,0 +1,7 @@
+
+
+{% for post, comments in post_comments.items %}
+{% for comment in comments %}
+{{comment.text}}
+{%endfor%}
+{%endfor%}

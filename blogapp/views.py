@@ -3,16 +3,22 @@ from blogapp.forms import PostForm,UserProfileForm,RegistrationForm,LoginForm,co
 from django.views.generic import View,UpdateView,CreateView,FormView,DetailView
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from blogapp.decorators import login_required
 from django.urls import reverse
 from blogapp.models import UserProfile,Post,Comments,Category
 
+
+decs=[login_required,never_cache]
 class signUpView(CreateView):
     template_name="register.html"
     form_class=RegistrationForm
 
     def get_success_url(self):
-        return reverse("signin")
+        return reverse("log-in")
 
+@method_decorator(decs,name="dispatch")
 class postCreateView(View):
     def get(self,request,*args,**kwargs):
         form=PostForm()
@@ -30,7 +36,7 @@ class postCreateView(View):
             messages.error(request,"failed to create the post")
             return render(request,"create.html",{"form":form})
         
-
+@method_decorator(decs,name="dispatch")
 class HomeView(View):
     
         def get(self,request,*args,**kwargs):
@@ -54,7 +60,7 @@ class HomeView(View):
         # qs=Post.objects.all()
         # return render(request,"index.html",{"data":qs})
         
-
+@method_decorator(decs,name="dispatch")
 class profileUpdateView(UpdateView):
     template_name="profile_add.html" 
     form_class=UserProfileForm    
@@ -76,28 +82,29 @@ class SignInView(FormView):
             user_object=authenticate(request,username=uname,password=pwd)
             if user_object:
                 login(request,user_object)
-            else:
-                return redirect("home")  
+                return redirect("home") 
+            # else:
+            #     return redirect("log-in")  
         messages.error(request,"invalid credentials")  
         return render(request,"login.html",{"form":form})  
-    
+@method_decorator(decs,name="dispatch")    
 class profileDetailView(DetailView):
     template_name="profile_detail.html"
     model=UserProfile
     context_object_name="data"
 
-
+@method_decorator(decs,name="dispatch")
 class profilelistView(View):
     def get(self,request,*args,**kwargs) :
         qs=UserProfile.objects.all().exclude(user=request.user)
         return render(request,"profile_list.html",{"data":qs})
-
+@method_decorator(decs,name="dispatch")
 class postdeleteView(View):
     def get(self,request,pk,*args,**kwargs):
         post_id=kwargs.get("pk")
         Post.objects.get(post_id=pk).delete()
         return redirect("home")
-    
+@method_decorator(decs,name="dispatch")    
 class CommentView(CreateView):
     template_name="index.html"   
     form_class=commentForm 
@@ -115,7 +122,7 @@ class CommentView(CreateView):
         form.instance.post=post_object
         return super().form_valid(form)
     
-
+@method_decorator(decs,name="dispatch")
 class CommentView(CreateView) :
     template_name="index.html"   
     form_class=commentForm
@@ -131,15 +138,20 @@ class CommentView(CreateView) :
         form.instance.post=post_object
         return super().form_valid(form)
     
-
+@method_decorator(decs,name="dispatch")
 class categorylistView(View):
     def get(self,request,*args,**kwargs):
         category=Category.objects.all()
         
         return render(request,"index.html",{"cat":category})    
-
+@method_decorator(decs,name="dispatch")
 class categoryPostView(View):
     def get(self,request,category_title,*args,**kwargs):
         category=Category.objects.get(title=category_title)
         posts=Post.objects.filter(cat=category_title)
         return render(request,"category_post.html",{"category":category,"posts":posts})
+@method_decorator(decs,name="dispatch")    
+class SignOutView(View):
+    def get(self,request,*args,**kwargs) :
+        logout(request) 
+        return redirect("log-in")  

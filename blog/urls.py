@@ -31,5 +31,6 @@ urlpatterns = [
     path("postdelete/<int:pk>/",views.postdeleteView.as_view(),name="delete"),
     path("postcomments/<int:pk>",views.CommentView.as_view(),name="comments"),
     path("category",views.categorylistView.as_view(),name="category"),
-    path("categorypost/<str:category_title>/",views.categoryPostView.as_view(),name="post_category")
+    path("categorypost/<str:category_title>/",views.categoryPostView.as_view(),name="post_category"),
+    path("signout/",views.SignOutView.as_view(),name="signout")
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
